@@ -12,13 +12,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Vérification si tous les champs ont été remplis
     if (!empty($username) && !empty($password) && !empty($email)) {
         // Vérification si l'utilisateur existe déjà
-        $select_query = "SELECT * FROM users WHERE username='$username'";
+        $select_query = "SELECT * FROM user_spc WHERE username='$username'";
         $result = mysqli_query($connexion, $select_query);
         if (mysqli_num_rows($result) > 0) {
             echo "Cet utilisateur existe déjà.";
         } else {
             // Insertion des données dans la table "users"
-            $insert_query = "INSERT INTO users (username, password, email) VALUES ('$username', '$password', '$email')";
+            $insert_query = "INSERT INTO user_spc (username, password, email) VALUES ('$username', '$password', '$email')";
             if (mysqli_query($connexion, $insert_query)) {
                 echo "Inscription réussie.";
             } else {

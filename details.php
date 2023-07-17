@@ -5,7 +5,10 @@ include "db.php";
 // Récupération des paramètres de l'URL
 $lot_id = $_GET['lot_id'];
 $alias = $_GET['alias'];
+$ligne = $_GET['ligne'];
+$step = $_GET['step'];
 $rtp = $_GET['rtp'];
+$event = $_GET['event'];
 $emplacement = $_GET['emplacement'];
 $date_heur = $_GET['date_heur'];
 $username = $_GET['username'];
@@ -16,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $confirmation = $_POST['confirmation'];
 
     // Insertion des données supprimées et de la confirmation dans la table "pieces_supprimees_etat"
-    $insert_query = "INSERT INTO pieces_supprimees (date_heur, lot_id, alias, rtp, emplacement, confirmation, username, date_heur1) VALUES ('$date_heur','$lot_id', '$alias', '$rtp', '$emplacement', '$confirmation', '$username', NOW() )";
+    $insert_query = "INSERT INTO pieces_supprimees (date_heur, lot_id, ligne, step, alias, rtp, event, emplacement, confirmation, username, date_heur1) VALUES ('$date_heur','$lot_id', '$ligne', '$step', '$alias', '$rtp', '$event', '$emplacement', '$confirmation', '$username', NOW() )";
     if (mysqli_query($connexion, $insert_query)) {
         echo "<script>alert('The results were successfully sent.'); window.location.href='affichage.php';</script>";
     } else {
@@ -28,18 +31,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Affichage des paramètres de la pièce sélectionnée et du formulaire de confirmation
 echo "<h2>Details</h2>";
 echo "<p>Lot ID : " . $lot_id . "</p>";
-echo "<p>Alias : " . $alias . "</p>";
+echo "<p>Line : " . $ligne . "</p>";
+echo "<p>Step : " . $step . "</p>";
+echo "<p>Machine : " . $alias . "</p>";
 echo "<p>RTP : " . $rtp . "</p>";
+echo "<p>Event : " . $event . "</p>";
 echo "<p>Emplacement : " . $emplacement . "</p>";
-echo "<p>Date/Heure : " . $date_heur . "</p>";
+echo "<p>Date/Hour : " . $date_heur . "</p>";
 echo "<p>name operator SPC : ". $username . "</p>";
 
 echo "<h2>Result</h2>";
 echo "<form method='post' onsubmit='return validateConfirmation()'>";
-echo "<label for='ok'>OK</label>";
-echo "<input type='radio' name='confirmation' value='ok' id='ok' required>";
-echo "<label for='ko'>KO</label>";
-echo "<input type='radio' name='confirmation' value='ko' id='ko' required><br>";
+echo "<label for='ok'>In control</label>";
+echo "<input type='radio' name='confirmation' value='In control' id='ok' required>";
+echo "<label for='ko'>OOC</label>";
+echo "<input type='radio' name='confirmation' value='OOC' id='ko' required><br>";
 echo "<input type='submit' value='send'>";
 echo "</form>";
 

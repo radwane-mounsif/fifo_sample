@@ -21,10 +21,20 @@ if (isset($_GET['session_id'])) {
     header("Location: login_spc.php");
     exit();
 }
+?>
 
+<div style="background-color: #03234b;">
+    <div style="float: right; margin: 10px 10px 20px 20px;">
+        <img src="epu2qqrv.png" alt="ST">
+    </div>
+    <div style="background-color: #03234b; margin: 0; overflow-x: hidden; overflow-y: auto; padding: 0;">
+        <h1 style="color: white; text-align: center;">SPC SYSTEM : Sample on hold</h1>
+    </div>
+    </div><br>
 
+<?php
 // Récupération des données de la base de données
-$select_query = "SELECT date_heur, lot_id, alias, rtp, emplacement FROM pieces";
+$select_query = "SELECT date_heur, ligne, step, lot_id, alias, rtp, emplacement, event FROM pieces";
 $resultat = mysqli_query($connexion, $select_query);
 
 // Affichage des données dans deux tableaux en fonction de la valeur du paramètre RTP
@@ -32,10 +42,10 @@ if (mysqli_num_rows($resultat) > 0) {
     // Tableau des pièces ayant RTP : Oui
     echo "<h2>RTP : Oui (priority 1)</h2>";
     echo "<table border='1'>";
-    echo "<tr><th>Date/Heure</th><th>LOT_ID</th><th>Alias</th><th>RTP</th><th>Emplacement</th><th>Action</th></tr>";
+    echo "<tr><th>Date/Hour</th><th>LOT_ID</th><th>Line</th><th>Step</th><th>Machine</th><th>Event</th><th>Location</th><th>Action</th></tr>";
     while ($row = mysqli_fetch_assoc($resultat)) {
       if ($row['rtp'] == 'oui') {
-        echo "<tr><td>" . $row['date_heur'] . "</td><td>" . $row['lot_id'] . "</td><td>" . $row['alias'] . "</td><td>" . $row['rtp'] . "</td><td>" . $row['emplacement'] . "</td><td><a href='details.php?lot_id=" . $row['lot_id'] . "&alias=" . $row['alias'] . "&rtp=" . $row['rtp'] . "&emplacement=" . $row['emplacement'] . "&date_heur=" . $row['date_heur'] . "&username=" . $username . "'>Voir Détails</a></td></tr>";
+        echo "<tr><td>" . $row['date_heur'] . "</td><td>" . $row['lot_id'] . "</td><td>" . $row['ligne'] . "</td><td>" . $row['step'] . "</td><td>" . $row['alias'] . "</td><td>" . $row['event'] . "</td><td>" . $row['emplacement'] . "</td><td><a href='details.php?lot_id=" . $row['lot_id'] ."&ligne=" . $row['ligne'] . "&step=" . $row['step'] . "&alias=" . $row['alias'] . "&rtp=" . $row['rtp'] . "&event=" . $row['event'] . "&emplacement=" . $row['emplacement'] . "&date_heur=" . $row['date_heur'] . "&username=" . $username . "'>SELECT</a></td></tr>";
       }
     }
     echo "</table>";
@@ -44,12 +54,12 @@ if (mysqli_num_rows($resultat) > 0) {
     mysqli_data_seek($resultat, 0);
     echo "<h2>RTP : Non (priority 2)</h2>";
     echo "<table border='1'>";
-    echo "<tr><th>Date/Heure</th><th>LOT_ID</th><th>Alias</th><th>RTP</th><th>Emplacement</th><th>Action</th></tr>";
+    echo "<tr><th>Date/Hour</th><th>LOT_ID</th><th>Line</th><th>Step</th><th>Machine</th><th>Event</th><th>Location</th><th>Action</th></tr>";
     while ($row = mysqli_fetch_assoc($resultat)) {
       if ($row['rtp'] == 'non') {
-        echo "<tr><td>" . $row['date_heur'] . "</td><td>" . $row['lot_id'] . "</td><td>" . $row['alias'] . "</td><td>" . $row['rtp'] . "</td><td>" . $row['emplacement'] . "</td><td><a href='details.php?lot_id=" . $row['lot_id'] . "&alias=" . $row['alias'] . "&rtp=" . $row['rtp'] . "&emplacement=" . $row['emplacement'] . "&date_heur=" . $row['date_heur'] . "&username=" . $username . "'>Voir Détails</a></td></tr>";
+        echo "<tr><td>" . $row['date_heur'] . "</td><td>" . $row['lot_id'] . "</td><td>" . $row['ligne'] . "</td><td>" . $row['step'] . "</td><td>" . $row['alias'] . "</td><td>" . $row['event'] . "</td><td>" . $row['emplacement'] . "</td><td><a href='details.php?lot_id=" . $row['lot_id'] ."&ligne=" . $row['ligne'] . "&step=" . $row['step'] . "&alias=" . $row['alias'] . "&rtp=" . $row['rtp'] . "&event=" . $row['event'] . "&emplacement=" . $row['emplacement'] . "&date_heur=" . $row['date_heur'] . "&username=" . $username . "'>SELECT</a></td></tr>";
       }
-    }    
+    }
     echo "</table>";
 } else {
     echo "<div style='text-align:center; padding:50px; background-color:blue; color:white; border: 2px solid white;'><h1>Aucune donnée à afficher</h1></div>";
@@ -124,6 +134,15 @@ a:hover {
     width: 100%;
   }
 }
-
+h1 {
+    text-align: center;
+    font-size: 26px;
+    margin: 19px 0;}
+ div {
+    color: #03234b;
+    margin: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 0;}
 
 </style>

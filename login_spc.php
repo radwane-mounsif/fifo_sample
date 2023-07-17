@@ -5,10 +5,9 @@ session_start();
 
 // Vérifier si l'utilisateur est déjà connecté
 if (isset($_SESSION['user_id'])) {
-    header("Location: affichage.php?session_id=".$_SESSION['user_id']);
+    header("Location: affichage.php?session_id=" . $_SESSION['user_id']);
     exit();
 }
-
 
 // Vérifier si les informations de connexion ont été envoyées
 if (isset($_POST['username']) && isset($_POST['password'])) {
@@ -20,22 +19,43 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     if (mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_assoc($result);
         $_SESSION['user_id'] = $row['id'];
-        header("Location: affichage.php?session_id=".$_SESSION['user_id']);
+        header("Location: affichage.php?session_id=" . $_SESSION['user_id']);
         exit();
     } else {
         echo "Nom d'utilisateur ou mot de passe incorrect";
     }
 }
 ?>
-<!-- Formulaire de connexion -->
-<form action="login_spc.php" method="post">
-    <input type="text" name="username" placeholder="Nom d'utilisateur">
-    <input type="password" name="password" placeholder="Mot de passe">
-    <button type="submit">Se connecter</button>
-</form>
-<p>
-<center>ce programme en phase de développement vous pouvez utiliser le mot <strong>"admin"</strong> pour le nom d'utilisateur et le mot de passe </center>
-</p>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SPC SYSTEM : LOGIN</title>
+    <style>
+        /* Your styles here */
+    </style>
+</head>
+<body>
+    <div style="background-color: #03234b;">
+        <div style="float: right; margin: 10px 10px 20px 20px;">
+            <img src="epu2qqrv.png" alt="ST">
+        </div>
+        <div style="background-color: #03234b; margin: 0; overflow-x: hidden; overflow-y: auto; padding: 0;">
+            <h3 style="color: white; text-align: center;">SPC SYSTEM : LOGIN</h3>
+        </div>
+    </div>
+
+    <!-- Formulaire de connexion -->
+    <form action="login_spc.php" method="post">
+        <input type="text" name="username" placeholder="Nom d'utilisateur">
+        <input type="password" name="password" placeholder="Mot de passe">
+        <button type="submit">Se connecter</button>
+    </form>
+    <p>
+        <center>ce programme en phase de développement vous pouvez utiliser le mot <strong>"admin"</strong> pour le nom d'utilisateur et le mot de passe </center>
+    </p>
+</body>
+</html>
 <style>
 form {
   display: flex;
